@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+class Time;
+
+class Speed {
+private:
+    float kmph;
+public:
+    Speed(float s) : kmph(s) {}
+    friend float calculateDistance(const Speed& speed, const Time& time);
+};
+
+class Time {
+private:
+    float hours;
+public:
+    Time(float t) : hours(t) {}
+    friend float calculateDistance(const Speed& speed, const Time& time);
+};
+
+float calculateDistance(const Speed& speed, const Time& time) {
+    return speed.kmph * time.hours;
+}
+
+int main() {
+    Speed mySpeed(60);     // 60 km/h
+    Time myTime(2);        // 2 hours
+    float distance = calculateDistance(mySpeed, myTime);
+    cout << "You have traveled: " << distance << " km!" << endl;
+    return 0;
+}
