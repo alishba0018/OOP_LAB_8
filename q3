@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+
+class ComplexNumber {
+private:
+    float real;
+    float imag;
+public:
+    ComplexNumber(float r = 0, float i = 0) : real(r), imag(i) {}
+    ComplexNumber operator+(const ComplexNumber& other) {
+        return ComplexNumber(real + other.real, imag + other.imag);
+    }
+    ComplexNumber operator-(const ComplexNumber& other) {
+        return ComplexNumber(real - other.real, imag - other.imag);
+    }
+    ComplexNumber operator*(const ComplexNumber& other) {
+        float r = real * other.real - imag * other.imag;
+        float i = real * other.imag + imag * other.real;
+        return ComplexNumber(r, i);
+    }
+    bool operator==(const ComplexNumber& other) {
+        return real == other.real && imag == other.imag;
+    }
+    void display() const {
+        cout << real;
+        if (imag >= 0)
+            cout << " + " << imag << "i";
+        else
+            cout << " - " << -imag << "i";
+        cout << endl;
+    }
+};
+
+int main() {
+    ComplexNumber c1(3, 4);      // 3 + 4i
+    ComplexNumber c2(1, 2);      // 1 + 2i
+    ComplexNumber c3(5, 6);      // 5 + 6i
+    ComplexNumber c4(5, 6);      // 5 + 6i (equal to c3)
+    cout << "Addition: ";
+    (c1 + c2).display();         // 4 + 6i
+    cout << "Subtraction: ";
+    (c3 - c2).display();         // 4 + 4i
+    cout << "Multiplication: ";
+    (ComplexNumber(2, 3) * ComplexNumber(1, 4)).display();  // -10 + 11i
+    cout << "Equality Check (c3 == c4): ";
+    cout << (c3 == c4 ? "True" : "False") << endl;
+    cout << "Equality Check (c1 == c2): ";
+    cout << (c1 == c2 ? "True" : "False") << endl;
+    return 0;
+}
