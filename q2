@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+class BallsFaced;
+
+class Runs {
+private:
+    int totalRuns;
+public:
+    Runs(int r) : totalRuns(r) {}
+    friend float calculateStrikeRate(const Runs& r, const BallsFaced& b);
+};
+
+class BallsFaced {
+private:
+    int balls;
+public:
+    BallsFaced(int b) : balls(b) {}
+    friend float calculateStrikeRate(const Runs& r, const BallsFaced& b);
+};
+
+float calculateStrikeRate(const Runs& r, const BallsFaced& b) {
+    if (b.balls == 0) return 0.0; // Avoid division by zero
+    return (r.totalRuns / (float)b.balls) * 100;
+}
+
+int main() {
+    Runs playerRuns(85);
+    BallsFaced playerBalls(60);
+    float strikeRate = calculateStrikeRate(playerRuns, playerBalls);
+    cout << "Strike Rate: " << strikeRate << endl;
+    return 0;
+}
