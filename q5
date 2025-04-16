@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+class Student;
+
+float calculateAverageGrade(const Student& s);  
+
+class Student {
+private:
+    string name;
+    float grade1, grade2, grade3;
+public:
+    Student(string n, float g1, float g2, float g3)
+        : name(n), grade1(g1), grade2(g2), grade3(g3) {}
+    friend class Teacher;
+    friend float calculateAverageGrade(const Student&);
+    void displayGrades() const {
+        cout << " Student: " << name << endl;
+        cout << "Grades: " << grade1 << ", " << grade2 << ", " << grade3 << endl;
+    }
+};
+
+class Teacher {
+public:
+    void updateGrade(Student& s, int gradeNumber, float newGrade) {
+        switch (gradeNumber) {
+            case 1: s.grade1 = newGrade; break;
+            case 2: s.grade2 = newGrade; break;
+            case 3: s.grade3 = newGrade; break;
+            default: cout << "Invalid grade number!" << endl; break;
+        }
+    }
+};
+
+float calculateAverageGrade(const Student& s) {
+    return (s.grade1 + s.grade2 + s.grade3) / 3.0;
+}
+
+int main() {
+    Student s1("Ayaan", 70.5, 82.0, 65.5);
+    Teacher t1;
+    cout << "nitial Grades:" << endl;
+    s1.displayGrades();
+    cout << "Average: " << calculateAverageGrade(s1) << endl;
+    cout << "Teacher updates Grade 3 to 90.0" << endl;
+    t1.updateGrade(s1, 3, 90.0);
+    cout << "Updated Grades:" << endl;
+    s1.displayGrades();
+    cout << " New Average: " << calculateAverageGrade(s1) << endl;
+    return 0;
+}
