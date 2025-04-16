@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+class TrafficSystem {
+private:
+    int carCount;
+    int delayInMinutes;
+public:
+    TrafficSystem(int cars = 0, int delay = 0) : carCount(cars), delayInMinutes(delay) {}
+    TrafficSystem operator+(int cars) {
+        return TrafficSystem(carCount + cars, delayInMinutes);
+    }
+    TrafficSystem operator-(int cars) {
+        int newCount = carCount - cars;
+        if (newCount < 0) newCount = 0;
+        return TrafficSystem(newCount, delayInMinutes);
+    }
+    TrafficSystem operator*(int factor) {
+        return TrafficSystem(carCount, delayInMinutes * factor);
+    }
+    bool operator==(const TrafficSystem& other) {
+        return carCount == other.carCount;
+    }
+    void display() const {
+        cout << "Cars: " << carCount << " Delay: " << delayInMinutes << " min" << endl;
+    }
+};
+
+int main() {
+    TrafficSystem roadA(50, 5);
+    TrafficSystem roadB(100, 8);
+    cout << "Initial Road A: ";
+    roadA.display();
+    TrafficSystem updatedA = roadA + 20;
+    cout << "After 20 cars enter Road A: ";
+    updatedA.display();
+    updatedA = updatedA - 15;
+    cout << "After 15 cars leave Road A: ";
+    updatedA.display();
+    updatedA = updatedA * 2;
+    cout << "After signal failure on Road A: ";
+    updatedA.display();
+    cout << "Road A equals Road B? " << (updatedA == roadB ? "Yes" : "No") << endl;
+    return 0;
+}
